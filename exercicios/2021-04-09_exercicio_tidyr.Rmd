@@ -1,0 +1,53 @@
+---
+title: "Untitled"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Nora Jones 
+    url: https://example.com/norajones
+    affiliation: Spacely Sprockets
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+1. Crie 5 novas colunas de gêneros na base imdb, cada uma com um dos gêneros contidos na coluna generos. Para os filmes com menos de 5 gêneros, substitua os valores NA pela string “inexistente”.
+
+2. Substitua os “????” no código abaixo para criar uma tabela do lucro médio dos filmes ao longo dos anos de 2000 a 2016, com cada ano sendo uma coluna da base.
+
+```{r}
+imdb %>%
+  mutate(lucro = receita - orcamento) %>%
+  filter(ano %in% "????") %>%
+  group_by("????") %>%
+  summarise(lucro_medio = "????") %>%
+  pivot_wider(names_from = "????", values_from = "????")
+```
+
+
+Para os exercícios 3, 4 e 5, vamos utilize a base pokemon, disponível no pacote basesCursoR.
+
+```{r}
+# install.packages("remotes")
+# remotes::install_github("curso-r/basesCursoR")
+
+pokemon <- basesCursoR::pokemon
+```
+
+3. Utilize a função `unite()` para juntar as duas colunas de tipo em uma única coluna na base pokemon.
+
+4. Utilize a função `unite()` para juntar as três colunas de cor em uma única coluna na base pokemon. Faça isso sem remover as 3 colunas originais.
+
+5. Utilizando a base pokemon, resolva os itens abaixo:
+
+a. Utilize a função `pivot_longer()` para criar uma única coluna de tipo na base pokemon.
+
+b. Utilize a base criada no item (a) e escreva um código para descobrir qual o tipo mais frequente na base, independentemente se ele é primário (tipo_1) ou secundário (tipo_2).
+
+6. Escreva uma função que receba uma base qualquer e o nome de uma coluna numérica dessa base e retorne uma figura com um gráfico de dispersão da coluna escolhida contra cada uma das outras variáveis numéricas da base.
+
+

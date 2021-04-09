@@ -1,0 +1,77 @@
+---
+title: "Untitled"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Nora Jones 
+    url: https://example.com/norajones
+    affiliation: Spacely Sprockets
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+1. Reescreva os códigos abaixo utilizando as funções across() e where().
+
+a.
+```{r}
+casas %>%
+  group_by(geral_qualidade) %>%
+  summarise(
+    acima_solo_area_media = mean(acima_solo_area, na.rm = TRUE),
+    garagem_area_media = mean(garagem_area, na.rm = TRUE),
+    valor_venda_medio = mean(venda_valor, na.rm = TRUE)
+  )
+```
+
+
+b.
+```{r}
+casas %>%
+  filter_at(
+    vars(porao_qualidade, varanda_fechada_area, cerca_qualidade),
+    ~!is.na(.x)
+  )
+```
+
+
+c.
+```{r}
+casas %>%
+  mutate_if(is.character, ~tidyr::replace_na(.x, replace = "Não possui"))
+```
+
+
+2. Utilizando a base casas, resolva os itens a seguir.
+
+a. Usando o `case_when()` crie um código para categorizar a variável venda_valor da seguinte maneira
+
+
+b. Utilize o código feito na letra (a) para agrupar a base ames pela variável venda_valor categorizada e calcular todas as áreas médias para cada uma dessas categorias.
+
+3. Escreva um código que receba a base ames e retorne uma tabela com apenas
+
+a. as colunas referentes à garagem da casa.
+
+b. as colunas referentes a variáveis de qualidade.
+
+c. colunas numéricas que representam áreas da casa e do terreno.
+
+d. colunas numéricas.
+
+e. colunas referentes à piscina, porão e o valor de venda.
+
+4. Usando a função `rename_with()`, troque todos os "_" dos nomes das colunas por um espaço " ".
+
+5. Escreva um código para colocar todas as colunas relativas a venda no começo da tabela ames.
+
+6. 5. Escreva um código para colocar todas as colunas numéricas da base ames no começo da tabela e todas as colunas categóricas no final.
+
+
+
+
