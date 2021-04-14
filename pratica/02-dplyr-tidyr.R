@@ -74,6 +74,7 @@ casas %>%
   dplyr::filter(num_na > 0) %>%
   dplyr::arrange(desc(num_na))
 
+
 # substituir NAs categóricos
 casas %>%
   dplyr::mutate(
