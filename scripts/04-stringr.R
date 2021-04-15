@@ -120,5 +120,5 @@ str_replace(string = c("Cassio", "Cássio"), pattern = "C[aá]ssio", "Teste")
 str_replace(c("Cassio sio teste"), "(\\W)sio(\\W)", "\\1AQUI\\2")  # substitui a palavra "sio" entre o primeiro espaço (conjunto) e o segundo espaço
 
 # Ignorando maíuscula
-str_detect(frutas, "[nN][aA]") # da match em n minúsculo ou maiúsculo ou a mínusclo ou a maiúsculo
-str_detect(frutas, regex("na", ignore_case = TRUE))
+str_detect(frutas, "[nN][aA]") # da match em n minúsculo ou maiúsculo ou a minúsclo ou a maiúsculo
+str_detect(frutas, regex("na", ignore_case = TRUE)) # ignora maículo ou minúsculo
