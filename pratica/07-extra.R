@@ -141,16 +141,118 @@ imdb %>%
   View()
 
 
+# contar quantos gêneros existem em cada filme
+imdb %>%
+  dplyr::mutate(
+    num_generos = stringr::str_count(generos, pattern = "\\|") + 1
+  ) %>%
+  dplyr::select(generos, num_generos) #%>%
+
+  # descobrir o número máximo de gêneros que existem em um filme
+  #dplyr::summarise(maximo = max(num_generos))
 
 
 
+# Item 4 - StringR - Regex ------------------------------------------------
+
+# Motivação: extrair o subtítulo dos filmes
+
+imdb %>%
+  dplyr::mutate(
+    subtitulo = stringr::str_extract(titulo, ": .*"),
+    subtitulo = stringr::str_remove(subtitulo, "^: ")
+  ) %>%
+  dplyr::select(titulo, subtitulo)
 
 
 
+# Item 5 - lubridate ------------------------------------------------------
+
+# Motivação: fazer uma análise decritiva do ozônio
+
+cetesb <- readr::read_rds("data/cetesb.rds")
+
+# correlação com lag (faz a contagem para trás, a base precisa estar ordenada)
+cetesb %>%
+  dplyr::mutate(
+    concentracao_lag3 = dplyr::lag(concentracao, 3)
+  ) %>%
+  dplyr::relocate(concentracao_lag3, .after = concentracao)
 
 
+cetesb %>%
+  dplyr::filter(poluente %in% c("03", "NO2"),
+                estacao_cetesb == "Ibirapuera",
+                hora == 13) %>%
+  dplyr::mutate(
+    concentracao_lag3 = dplyr::lag(concentracao, 3)
+  ) %>%
+  ggplot2::ggplot(ggplot2::aes(x = concentracao_lag3, y = concentracao)) +
+  ggplot2::geom_point()
 
 
+# Item 6 - purrr ----------------------------------------------------------
+
+# Motivação: criar coluna de pontos do time de casa
+# ganhos a partir de um placar ({ brasileirao })
+
+# remotes::install_github("williamorim/brasileirao")
+
+brasileirao::matches %>% View()
+
+
+# entendendo o split
+gols <- stringr::str_split("100x10", pattern = "x", simplify = TRUE)
+gols[1]
+gols[2]
+
+
+# criando função para cálculo da pontuação
+calcular_pontos <- function(placar) {
+
+  gols <- stringr::str_split(placar, pattern = "x", simplify = TRUE)
+
+  if (gols[1] > gols[2]) { #se o time da casa ganhar, então é 3 pontos
+    return(3)
+  } else if (gols[1] < gols[2]) { #se o time da casa perder, então é 0 pontos
+    return(0)
+  } else if (gols[1] == gols[2]) { #se o time empatar, então é 1 ponto
+    return(1)
+  }
+
+}
+
+# a função acima não é vetorizada, não aceita um vetor como input, pra isso podemos usar o purrr
+purrr::map(c("3x2", "2x2"), calcular_pontos)
+
+
+# criando coluna com o placar
+brasileirao::matches %>%
+  dplyr::mutate(
+    pontos = purrr::map_dbl(score, calcular_pontos)
+  )
+
+
+# podemos criar a função vetoriada com case when, assim não seria necessário usar o purrr
+calcular_pontos_vetorizada <- function(placar) {
+
+  gols <- stringr::str_split(placar, pattern = "x", simplify = TRUE)
+  gols_casa <- gols[,1]
+  gols_visitante <- gols[, 2]
+
+  dplyr::case_when(
+    gols_casa > gols_visitante ~ 3,
+    gols_casa < gols_visitante ~ 0,
+    TRUE ~ 1
+  )
+
+}
+
+# criando coluna com o placar sem purrr::map
+brasileirao::matches %>%
+  dplyr::mutate(
+    pontos = calcular_pontos_vetorizada(score)
+  )
 
 
 
