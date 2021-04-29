@@ -43,7 +43,6 @@ cpf_formatado <- stringr::str_c(pontos,
                                 stringr::str_sub(cpf, -2, -1), 
                                 sep = "-")
 
-
 return(cpf_formatado)
 
 }
