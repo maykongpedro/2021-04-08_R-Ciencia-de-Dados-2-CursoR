@@ -1,0 +1,71 @@
+---
+title: "Untitled"
+author: "Maykon Gabriel"
+date: "28/04/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. O CPF é um número de 11 dígitos, por exemplo: 54491651884. No entanto para facilitar a visualização costumamos mostrá-lo com separadores a cada 3 casas: 544.916.518-84. Crie uma função que transforma um número de 11 dígitos em uma string com as separações, como um CPF.
+
+
+2. Transforme o vetor de strings abaixo em "01 - Alto" "02 - Médio" "03 - Baixo".
+
+```{r}
+s <- c('Alto', 'Médio', 'Baixo')
+```
+
+
+3. Crie uma regex que capture múltiplas versões da palavra ‘casa’. Ela deve funcionar com as palavras ‘Casa’, ‘CASA’, ‘CaSa’, ‘CAsa’. Teste-a usando a função `str_detect()`.
+```{r}
+s <- c('Casa', 'CASA', 'CaSa', 'CAsa')
+```
+
+
+4. Imagine que a seguinte string é a parte final de uma URL.
+```{r}
+# `/ac/rio-branco/xpto-xyz-1-0-1fds2396-5`
+```
+
+Transforme-a em “AC - Rio Branco” utilizando funções do pacote {stringr}.
+
+```{r}
+url <- c('/ac/rio-branco/xpto-xyz-1-0-1fds2396-5')
+```
+
+
+5. Crie uma função que retorna `TRUE` quando a string é um [palíndromo](https://pt.wikipedia.org/wiki/Pal%C3%ADndromo) e `FALSO` caso não seja.
+
+
+6. De acordo com as regras da língua portuguesa, antes de “p” ou “b” devemos usar a letra “m”. Em outras palavras, com outras consoantes, usamos a letra “N”. Suponha que você tem o seguinte texto com erros gramaticais:
+```{r}
+texto <- 'Nós chamamos os bonbeiros quando começou o incêmdio.'
+```
+
+Crie uma função para corrigi-lo.
+
+
+7. Considere o seguinte texto
+```{r}
+txt <- "A função mais importante para leitura de dados no `lubridate` é a `ymd`. Essa função serve para ler qualquer data de uma `string` no formato `YYYY-MM-DD`. Essa função é útil pois funciona com qualquer separador entre os elementos da data e também porque temos uma função para cada formato (`mdy`, `dmy`, `dym`, `myd`, `ydm`)."
+```
+
+
+Extraia todas as combinações da função `ymd`, sem repetições.
+
+8. Considere as frases abaixo
+```{r}
+s <- c(
+  'O produto é muito bom.',
+  'O produto não é bom.',
+  'O produto não é muito bom.',
+  'O produto não é ruim.',
+  'O produto não é não bom.'
+)
+```
+
+
+Crie uma regra para identificar se o texto refere-se a um feedback positivo ou negativo sobre o produto (considere “não bom = ruim” e “não ruim = bom”). Retorne um vetor lógico que vale TRUE se o feedback é positivo e FALSE caso contrário.

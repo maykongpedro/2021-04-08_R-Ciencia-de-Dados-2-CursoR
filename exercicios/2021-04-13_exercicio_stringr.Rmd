@@ -1,70 +1,100 @@
 ---
-title: "Untitled"
-description: |
-  A new article created using the Distill format.
-author:
-  - name: Nora Jones 
-    url: https://example.com/norajones
-    affiliation: Spacely Sprockets
-    affiliation_url: https://example.com/spacelysprokets
+title: "Vignette Title"
+author: "Vignette Author"
 date: "`r Sys.Date()`"
-output: distill::distill_article
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+1.  O CPF é um número de 11 dígitos, por exemplo: 54491651884. No entanto para facilitar a visualização costumamos mostrá-lo com separadores a cada 3 casas: 544.916.518-84. Crie uma função que transforma um número de 11 dígitos em uma string com as separações, como um CPF.
+
+```{r}
+
+cpf <- 54491651884
+
+formatar_cpf <- function(cpf) {
+
+# usar str_c para "colar" strings diferentes
+pontos <- stringr::str_c(
+  
+  # primeiros 3 caracteres
+  stringr::str_sub(cpf, start = 1, end = 3),
+  
+  # segundo trio
+  stringr::str_sub(cpf, start = 4, end = 6),
+  
+  # terceiro trio
+  stringr::str_sub(cpf, start = 7, end = 9),
+  
+  # separador
+  sep = "."
+)
+
+# junta o começo com o final e o traço
+cpf_formatado <- stringr::str_c(pontos, 
+                                stringr::str_sub(cpf, -2, -1), 
+                                sep = "-")
+
+
+return(cpf_formatado)
+
+}
+
+formatar_cpf(cpf)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web. 
-
-Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
-
-1. O CPF é um número de 11 dígitos, por exemplo: 54491651884. No entanto para facilitar a visualização costumamos mostrá-lo com separadores a cada 3 casas: 544.916.518-84. Crie uma função que transforma um número de 11 dígitos em uma string com as separações, como um CPF.
-
-
-2. Transforme o vetor de strings abaixo em "01 - Alto" "02 - Médio" "03 - Baixo".
+2.  Transforme o vetor de strings abaixo em "01 - Alto" "02 - Médio" "03 - Baixo".
 
 ```{r}
 s <- c('Alto', 'Médio', 'Baixo')
 ```
 
+3.  Crie uma regex que capture múltiplas versões da palavra 'casa'. Ela deve funcionar com as palavras 'Casa', 'CASA', 'CaSa', 'CAsa'. Teste-a usando a função `str_detect()`.
 
-3. Crie uma regex que capture múltiplas versões da palavra ‘casa’. Ela deve funcionar com as palavras ‘Casa’, ‘CASA’, ‘CaSa’, ‘CAsa’. Teste-a usando a função `str_detect()`.
 ```{r}
 s <- c('Casa', 'CASA', 'CaSa', 'CAsa')
 ```
 
-4. Imagine que a seguinte string é a parte final de uma URL.
+4.  Imagine que a seguinte string é a parte final de uma URL.
 
-`/ac/rio-branco/xpto-xyz-1-0-1fds2396-5`
+```{r}
+# `/ac/rio-branco/xpto-xyz-1-0-1fds2396-5`
+```
 
-Transforme-a em “AC - Rio Branco” utilizando funções do pacote {stringr}.
+Transforme-a em "AC - Rio Branco" utilizando funções do pacote {stringr}.
 
 ```{r}
 url <- c('/ac/rio-branco/xpto-xyz-1-0-1fds2396-5')
 ```
 
+5.  Crie uma função que retorna `TRUE` quando a string é um [palíndromo](https://pt.wikipedia.org/wiki/Pal%C3%ADndromo) e `FALSO` caso não seja.
 
-5. Crie uma função que retorna `TRUE` quando a string é um [palíndromo](https://pt.wikipedia.org/wiki/Pal%C3%ADndromo) e `FALSO` caso não seja.
+6.  De acordo com as regras da língua portuguesa, antes de "p" ou "b" devemos usar a letra "m". Em outras palavras, com outras consoantes, usamos a letra "N". Suponha que você tem o seguinte texto com erros gramaticais:
 
-
-6. De acordo com as regras da língua portuguesa, antes de “p” ou “b” devemos usar a letra “m”. Em outras palavras, com outras consoantes, usamos a letra “N”. Suponha que você tem o seguinte texto com erros gramaticais:
 ```{r}
 texto <- 'Nós chamamos os bonbeiros quando começou o incêmdio.'
 ```
 
 Crie uma função para corrigi-lo.
 
+7.  Considere o seguinte texto
 
-7. Considere o seguinte texto
 ```{r}
 txt <- "A função mais importante para leitura de dados no `lubridate` é a `ymd`. Essa função serve para ler qualquer data de uma `string` no formato `YYYY-MM-DD`. Essa função é útil pois funciona com qualquer separador entre os elementos da data e também porque temos uma função para cada formato (`mdy`, `dmy`, `dym`, `myd`, `ydm`)."
 ```
 
-
 Extraia todas as combinações da função `ymd`, sem repetições.
 
-8. Considere as frases abaixo
+8.  Considere as frases abaixo
+
 ```{r}
 s <- c(
   'O produto é muito bom.',
@@ -75,8 +105,4 @@ s <- c(
 )
 ```
 
-
-Crie uma regra para identificar se o texto refere-se a um feedback positivo ou negativo sobre o produto (considere “não bom = ruim” e “não ruim = bom”). Retorne um vetor lógico que vale TRUE se o feedback é positivo e FALSE caso contrário.
-
-
-
+Crie uma regra para identificar se o texto refere-se a um feedback positivo ou negativo sobre o produto (considere "não bom = ruim" e "não ruim = bom"). Retorne um vetor lógico que vale TRUE se o feedback é positivo e FALSE caso contrário.
